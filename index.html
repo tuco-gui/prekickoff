@@ -201,6 +201,23 @@
         `
     }
 ];
+// Lógica para exibir orientações ou agenda
+const ajudaSim = document.getElementById('ajuda-sim');
+const ajudaNao = document.getElementById('ajuda-nao');
+const agendaInstrucoes = document.getElementById('agenda-instrucoes');
+const agendaEmbed = document.getElementById('agenda-embed');
+
+if (ajudaSim && ajudaNao && agendaInstrucoes && agendaEmbed) {
+    ajudaSim.addEventListener('change', () => {
+        agendaInstrucoes.classList.add('hidden');
+        agendaEmbed.classList.remove('hidden');
+    });
+
+    ajudaNao.addEventListener('change', () => {
+        agendaInstrucoes.classList.remove('hidden');
+        agendaEmbed.classList.add('hidden');
+    });
+}
 
                 let currentSection = 0;
                 function renderSection() {
