@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo à Etapa de Pré-Kickoff!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap">
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <header class="bg-white py-4">
+        <div class="container mx-auto flex justify-center">
+            <img src="V4 Company Logo" alt="V4 Company Logo" class="h-12">
+        </div>
+    </header>
+    <main id="main-content" class="container mx-auto p-4 pt-6 md:p-6 lg:p-12 xl:p-24">
+        <h1 class="text-3xl font-bold mb-4">Bem-vindo à Etapa de Pré-Kickoff!</h1>
+        <p class="text-lg mb-8">Olá! Você está na etapa inicial e fundamental do nosso projeto: a Pré-Kickoff. Antes de seguirmos, precisamos esclarecer uma dúvida importante.</p>
+        <p class="text-lg mb-8">Você já assistiu à aula da Growth Class?</p>
+        <div class="flex justify-center mb-8">
+            <a id="sim" href="javascript:void(0)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Sim, já assisti</a>
+            <a href="https://vendas.v4company.com/growth-class-1/?utm_gc=001N400000GgpONIAZ" target="_blank" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md ml-4">Não, assistir agora</a>
+        </div>
+    </main>
+    <script>
+        const mainContent = document.getElementById('main-content');
+        const simButton = document.getElementById('sim');
+
+        simButton.addEventListener('click', () => {
+            mainContent.innerHTML = 
+                <h2 class="text-2xl font-bold mb-4">O que é a etapa de Pré-Kickoff?</h2>
+                <p class="text-lg mb-8">A etapa de Pré-Kickoff é o momento em que organizamos todas as informações fundamentais do seu negócio. É aqui que começamos a construir a base sólida para o planejamento estratégico. Nosso objetivo é conhecer a fundo suas necessidades, objetivos, desafios e expectativas. Com isso, conseguimos desenhar um plano alinhado com os resultados que você deseja alcançar.</p>
+                <h2 class="text-2xl font-bold mb-4">Por que a etapa de Pré-Kickoff é tão importante?</h2>
+                <p class="text-lg mb-8">Alinhamento Estratégico: Com informações completas e precisas, conseguimos criar uma estratégia personalizada e eficaz.</p>
+                <p class="text-lg mb-8">Diagnóstico Preciso: Identificamos os pontos fortes do seu negócio e os desafios para gerar resultados consistentes.</p>
+                <p class="text-lg mb-8">Eficiência no Planejamento: Quanto mais dados tivermos agora, mais eficiente será o planejamento e a execução das ações nos próximos passos do projeto.</p>
+                <h2 class="text-2xl font-bold mb-4">Como funciona esta etapa?</h2>
+                <p class="text-lg mb-8">Preenchimento do Formulário de Diagnóstico Inicial: Ele foi criado para nos ajudar a entender suas prioridades e o cenário atual do seu negócio. Dedique-se ao preenchimento, pois suas respostas serão o ponto de partida para nosso planejamento.</p>
+                <p class="text-lg mb-8">Revisão e Alinhamento Interno: Nossa equipe analisa as informações enviadas e prepara os próximos passos.</p>
+                <p class="text-lg mb-8">Kickoff: Após essa etapa, realizaremos a reunião de Kickoff, onde definiremos as metas e estratégias personalizadas.</p>
+                <div class="flex justify-center mb-8">
+                    <a id="form-link" href="javascript:void(0)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Acessar Formulário de Diagnóstico Inicial</a>
+                </div>
+            ;
+
+            const formLink = document.getElementById('form-link');
+            formLink.addEventListener('click', () => {
+                const formSections = [
+                    {
+                        title: "Informações Iniciais",
+                        content: 
+                            <div>
+                                <label for="nome" class="block text-sm font-medium">Nome Completo:</label>
+                                <input type="text" id="nome" name="nome" class="w-full p-2 border rounded-md" required>
+                            </div>
+                            <div>
+                                <label for="empresa" class="block text-sm font-medium">Empresa:</label>
+                                <input type="text" id="empresa" name="empresa" class="w-full p-2 border rounded-md" required>
+                            </div>
+                            <div>
+                                <label for="telefone" class="block text-sm font-medium">Telefone:</label>
+                                <input type="tel" id="telefone" name="telefone" class="w-full p-2 border rounded-md" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium">E-mail:</label>
+                                <input type="email" id="email" name="email" class="w-full p-2 border rounded-md" required>
+                            </div>
+                        
+                    },
+                    {
+                        title: "Seção 1: Informações Gerais",
+                        content: 
+                            <div>
+                                <label class="block text-sm font-medium">Você já fez algum tipo de estratégia de marketing antes?</label>
+                                <div>
+                                    <input type="radio" id="marketing-sim" name="marketing" value="Sim" class="mr-2">
+                                    <label for="marketing-sim">Sim</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="marketing-nao" name="marketing" value="Não" class="mr-2">
+                                    <label for="marketing-nao">Não</label>
+                                </div>
+                            </div>
+                            <div id="resultados" class="hidden">
+                                <label for="resultados-texto" class="block text-sm font-medium">Se sim, quais foram os resultados obtidos?</label>
+                                <textarea id="resultados-texto" name="resultados-texto" class="w-full p-2 border rounded-md"></textarea>
+                            </div>
+                        
+                    },
+                    {
+                        title: "Seção 2: Objetivos e Desafios",
+                        content: 
+                            <div>
+                                <label for="objetivos" class="block text-sm font-medium">Quais são os principais objetivos da sua empresa?</label>
+                                <textarea id="objetivos" name="objetivos" class="w-full p-2 border rounded-md" required></textarea>
+                            </div>
+                            <div>
+                                <label for="desafios" class="block text-sm font-medium">Quais são os principais desafios que a sua empresa enfrenta atualmente?</label>
+                                <textarea id="desafios" name="desafios" class="w-full p-2 border rounded-md" required></textarea>
+                            </div>
+                            <div>
+                                <label for="metas" class="block text-sm font-medium">Quais são as principais metas que você deseja alcançar nos próximos 6-12 meses?</label>
+                                <textarea id="metas" name="metas" class="w-full p-2 border rounded-md" required></textarea>
+                            </div>
+                        
+                    },
+                    {
+                        title: "Seção 3: Informações sobre a Empresa",
+                        content: 
+                            <div>
+                                <label for="tipo-empresa" class="block text-sm font-medium">Qual é o tipo de empresa?</label>
+                                <input type="text" id="tipo-empresa" name="tipo-empresa" class="w-full p-2 border rounded-md" required>
+                            </div>
+                            <div>
+                                <label for="tamanho-empresa" class="block text-sm font-medium">Qual é o tamanho da empresa (número de funcionários, faturamento, etc.)?</label>
+                                <textarea id="tamanho-empresa" name="tamanho-empresa" class="w-full p-2 border rounded-md" required></textarea>
+                            </div>
+                            <div>
+                                <label for="setor-industria" class="block text-sm font-medium">Qual é o setor ou indústria em que a empresa atua?</label>
+                                <input type="text" id="setor-industria" name="setor-industria" class="w-full p-2 border rounded-md" required>
+                            </div>
+                        
+                    },
+                    {
+                        title: "Seção 4: Mercado e Concorrentes",
+                        content: 
+                            <div>
+                                <label for="concorrentes" class="block text-sm font-medium">Quais são os principais concorrentes da sua empresa?</label>
+                                <input type="text" id="concorrentes" name="concorrentes" class="w-full p-2 border rounded-md" required>
+                            </div>
+                            <div>
+                                <label for="canais-marketing" class="block text-sm font-medium">Quais são os principais canais de marketing que a sua empresa utiliza?</label>
+                                <textarea id="canais-marketing" name="canais-marketing" class="w-full p-2 border rounded-md" required></textarea>
+                            </div>
+                            <div>
+                                <label for="publico-alvo" class="block text-sm font-medium">Quais são os principais públicos-alvo da sua empresa?</label>
+                                <textarea id="publico-alvo" name="publico-alvo" class="w-full p-2 border rounded-md" required></textarea>
+                            </div>
+                        
+                    },
+                    {
+                        title: "Seção 5: Plataformas e Ferramentas",
+                        content: 
+                            <div>
+                                <label for="plataformas-utilizadas" class="block text-sm font-medium">Quais são as principais plataformas de marketing que a sua empresa utiliza?</label>
+                                <textarea id="plataformas-utilizadas" name="plataformas-utilizadas" class="w-full p-2 border rounded-md" required></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium">Você utiliza alguma das seguintes plataformas?</label>
+                                <div>
+                                    <input type="checkbox" id="google-analytics" name="plataformas" value="Google Analytics" class="mr-2">
+                                    <label for="google-analytics">Google Analytics</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="google-ads" name="plataformas" value="Google Ads" class="mr-2">
+                                    <label for="google-ads">Google Ads</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="facebook-ads" name="plataformas" value="Facebook Ads" class="mr-2">
+                                    <label for="facebook-ads">Facebook Ads</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="instagram-ads" name="plataformas" value="Instagram Ads" class="mr-2">
+                                    <label for="instagram-ads">Instagram Ads</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="outras" name="plataformas" value="Outras" class="mr-2">
+                                    <label for="outras">Outras (especifique abaixo)</label>
+                                    <textarea id="outras-plataformas" name="outras-plataformas" class="w-full p-2 border rounded-md mt-2 hidden"></textarea>
+                                </div>
+                            </div>
+                        
+                    }
+                ];
+
+                let currentSection = 0;
+
+                function renderSection() {
+                    const section = formSections[currentSection];
+                    mainContent.innerHTML = 
+                        <h2 class="text-2xl font-bold mb-4">${section.title}</h2>
+                        <form id="form-section" class="space-y-6">
+                            ${section.content}
+                            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">
+                                ${currentSection === formSections.length - 1 ? "Enviar" : "Próximo"}
+                            </button>
+                        </form>
+                    ;
+
+                    const form = document.getElementById("form-section");
+                    form.addEventListener("submit", (event) => {
+                        event.preventDefault();
+                        if (currentSection < formSections.length - 1) {
+                            currentSection++;
+                            renderSection();
+                        } else {
+                            mainContent.innerHTML = 
+                                <h2 class="text-2xl font-bold mb-4">Formulário enviado com sucesso!</h2>
+                                <p class="text-green-600 font-bold">Obrigado por preencher o formulário.</p>
+                            ;
+                        }
+                    });
+
+                    const marketingSim = document.getElementById('marketing-sim');
+                    const marketingNao = document.getElementById('marketing-nao');
+                    const resultados = document.getElementById('resultados');
+
+                    if (marketingSim && marketingNao && resultados) {
+                        marketingSim.addEventListener('change', () => {
+                            resultados.classList.remove('hidden');
+                        });
+
+                        marketingNao.addEventListener('change', () => {
+                            resultados.classList.add('hidden');
+                        });
+                    }
+
+                    const outras = document.getElementById('outras');
+                    const outrasPlataformas = document.getElementById('outras-plataformas');
+
+                    if (outras && outrasPlataformas) {
+                        outras.addEventListener('change', () => {
+                            if (outras.checked) {
+                                outrasPlataformas.classList.remove('hidden');
+                            } else {
+                                outrasPlataformas.classList.add('hidden');
+                            }
+                        });
+                    }
+                }
+
+                renderSection();
+            });
+        });
+    </script>
+</body>
+</html>
