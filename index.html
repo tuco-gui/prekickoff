@@ -25,9 +25,8 @@
     <script>
         const mainContent = document.getElementById('main-content');
         const simButton = document.getElementById('sim');
-
         simButton.addEventListener('click', () => {
-            mainContent.innerHTML = 
+            mainContent.innerHTML = `
                 <h2 class="text-2xl font-bold mb-4">O que é a etapa de Pré-Kickoff?</h2>
                 <p class="text-lg mb-8">A etapa de Pré-Kickoff é o momento em que organizamos todas as informações fundamentais do seu negócio. É aqui que começamos a construir a base sólida para o planejamento estratégico. Nosso objetivo é conhecer a fundo suas necessidades, objetivos, desafios e expectativas. Com isso, conseguimos desenhar um plano alinhado com os resultados que você deseja alcançar.</p>
                 <h2 class="text-2xl font-bold mb-4">Por que a etapa de Pré-Kickoff é tão importante?</h2>
@@ -41,14 +40,13 @@
                 <div class="flex justify-center mb-8">
                     <a id="form-link" href="javascript:void(0)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Acessar Formulário de Diagnóstico Inicial</a>
                 </div>
-            ;
-
+            `;
             const formLink = document.getElementById('form-link');
             formLink.addEventListener('click', () => {
                 const formSections = [
                     {
                         title: "Informações Iniciais",
-                        content: 
+                        content: `
                             <div>
                                 <label for="nome" class="block text-sm font-medium">Nome Completo:</label>
                                 <input type="text" id="nome" name="nome" class="w-full p-2 border rounded-md" required>
@@ -65,11 +63,11 @@
                                 <label for="email" class="block text-sm font-medium">E-mail:</label>
                                 <input type="email" id="email" name="email" class="w-full p-2 border rounded-md" required>
                             </div>
-                        
+                        `
                     },
                     {
                         title: "Seção 1: Informações Gerais",
-                        content: 
+                        content: `
                             <div>
                                 <label class="block text-sm font-medium">Você já fez algum tipo de estratégia de marketing antes?</label>
                                 <div>
@@ -85,11 +83,11 @@
                                 <label for="resultados-texto" class="block text-sm font-medium">Se sim, quais foram os resultados obtidos?</label>
                                 <textarea id="resultados-texto" name="resultados-texto" class="w-full p-2 border rounded-md"></textarea>
                             </div>
-                        
+                        `
                     },
                     {
                         title: "Seção 2: Objetivos e Desafios",
-                        content: 
+                        content: `
                             <div>
                                 <label for="objetivos" class="block text-sm font-medium">Quais são os principais objetivos da sua empresa?</label>
                                 <textarea id="objetivos" name="objetivos" class="w-full p-2 border rounded-md" required></textarea>
@@ -102,11 +100,11 @@
                                 <label for="metas" class="block text-sm font-medium">Quais são as principais metas que você deseja alcançar nos próximos 6-12 meses?</label>
                                 <textarea id="metas" name="metas" class="w-full p-2 border rounded-md" required></textarea>
                             </div>
-                        
+                        `
                     },
                     {
                         title: "Seção 3: Informações sobre a Empresa",
-                        content: 
+                        content: `
                             <div>
                                 <label for="tipo-empresa" class="block text-sm font-medium">Qual é o tipo de empresa?</label>
                                 <input type="text" id="tipo-empresa" name="tipo-empresa" class="w-full p-2 border rounded-md" required>
@@ -119,11 +117,11 @@
                                 <label for="setor-industria" class="block text-sm font-medium">Qual é o setor ou indústria em que a empresa atua?</label>
                                 <input type="text" id="setor-industria" name="setor-industria" class="w-full p-2 border rounded-md" required>
                             </div>
-                        
+                        `
                     },
                     {
                         title: "Seção 4: Mercado e Concorrentes",
-                        content: 
+                        content: `
                             <div>
                                 <label for="concorrentes" class="block text-sm font-medium">Quais são os principais concorrentes da sua empresa?</label>
                                 <input type="text" id="concorrentes" name="concorrentes" class="w-full p-2 border rounded-md" required>
@@ -136,11 +134,11 @@
                                 <label for="publico-alvo" class="block text-sm font-medium">Quais são os principais públicos-alvo da sua empresa?</label>
                                 <textarea id="publico-alvo" name="publico-alvo" class="w-full p-2 border rounded-md" required></textarea>
                             </div>
-                        
+                        `
                     },
                     {
                         title: "Seção 5: Plataformas e Ferramentas",
-                        content: 
+                        content: `
                             <div>
                                 <label for="plataformas-utilizadas" class="block text-sm font-medium">Quais são as principais plataformas de marketing que a sua empresa utiliza?</label>
                                 <textarea id="plataformas-utilizadas" name="plataformas-utilizadas" class="w-full p-2 border rounded-md" required></textarea>
@@ -169,15 +167,13 @@
                                     <textarea id="outras-plataformas" name="outras-plataformas" class="w-full p-2 border rounded-md mt-2 hidden"></textarea>
                                 </div>
                             </div>
-                        
+                        `
                     }
                 ];
-
                 let currentSection = 0;
-
                 function renderSection() {
                     const section = formSections[currentSection];
-                    mainContent.innerHTML = 
+                    mainContent.innerHTML = `
                         <h2 class="text-2xl font-bold mb-4">${section.title}</h2>
                         <form id="form-section" class="space-y-6">
                             ${section.content}
@@ -185,8 +181,7 @@
                                 ${currentSection === formSections.length - 1 ? "Enviar" : "Próximo"}
                             </button>
                         </form>
-                    ;
-
+                    `;
                     const form = document.getElementById("form-section");
                     form.addEventListener("submit", (event) => {
                         event.preventDefault();
@@ -194,30 +189,25 @@
                             currentSection++;
                             renderSection();
                         } else {
-                            mainContent.innerHTML = 
+                            mainContent.innerHTML = `
                                 <h2 class="text-2xl font-bold mb-4">Formulário enviado com sucesso!</h2>
                                 <p class="text-green-600 font-bold">Obrigado por preencher o formulário.</p>
-                            ;
+                            `;
                         }
                     });
-
                     const marketingSim = document.getElementById('marketing-sim');
                     const marketingNao = document.getElementById('marketing-nao');
                     const resultados = document.getElementById('resultados');
-
                     if (marketingSim && marketingNao && resultados) {
                         marketingSim.addEventListener('change', () => {
                             resultados.classList.remove('hidden');
                         });
-
                         marketingNao.addEventListener('change', () => {
                             resultados.classList.add('hidden');
                         });
                     }
-
                     const outras = document.getElementById('outras');
                     const outrasPlataformas = document.getElementById('outras-plataformas');
-
                     if (outras && outrasPlataformas) {
                         outras.addEventListener('change', () => {
                             if (outras.checked) {
@@ -228,7 +218,6 @@
                         });
                     }
                 }
-
                 renderSection();
             });
         });
