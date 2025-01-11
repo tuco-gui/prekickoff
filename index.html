@@ -25,6 +25,7 @@
     <script>
         const mainContent = document.getElementById('main-content');
         const simButton = document.getElementById('sim');
+
         simButton.addEventListener('click', () => {
             mainContent.innerHTML = `
                 <h2 class="text-2xl font-bold mb-4">O que é a etapa de Pré-Kickoff?</h2>
@@ -41,188 +42,48 @@
                     <a id="form-link" href="javascript:void(0)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Acessar Formulário de Diagnóstico Inicial</a>
                 </div>
             `;
+
             const formLink = document.getElementById('form-link');
             formLink.addEventListener('click', () => {
                 const formSections = [
                     {
-                        title: "Informações Iniciais",
+                        title: "Seção 5: Plataformas e Ferramentas",
                         content: `
                             <div>
-                                <label for="nome" class="block text-sm font-medium">Nome Completo:</label>
-                                <input type="text" id="nome" name="nome" class="w-full p-2 border rounded-md" required>
-                            </div>
-                            <div>
-                                <label for="empresa" class="block text-sm font-medium">Empresa:</label>
-                                <input type="text" id="empresa" name="empresa" class="w-full p-2 border rounded-md" required>
-                            </div>
-                            <div>
-                                <label for="telefone" class="block text-sm font-medium">Telefone:</label>
-                                <input type="tel" id="telefone" name="telefone" class="w-full p-2 border rounded-md" required>
-                            </div>
-                            <div>
-                                <label for="email" class="block text-sm font-medium">E-mail:</label>
-                                <input type="email" id="email" name="email" class="w-full p-2 border rounded-md" required>
-                            </div>
-                        `
-                    },
-                    {
-                        title: "Seção 1: Informações Gerais",
-                        content: `
-                            <div>
-                                <label class="block text-sm font-medium">Você já fez algum tipo de estratégia de marketing antes?</label>
+                                <p class="text-sm font-medium">Selecione todas as opções que sua empresa utiliza:</p>
                                 <div>
-                                    <input type="radio" id="marketing-sim" name="marketing" value="Sim" class="mr-2">
-                                    <label for="marketing-sim">Sim</label>
+                                    <input type="checkbox" id="facebook-ads" name="plataformas" value="Facebook Ads" class="mr-2">
+                                    <label for="facebook-ads">Facebook Ads (Colocar de ADM)</label>
                                 </div>
                                 <div>
-                                    <input type="radio" id="marketing-nao" name="marketing" value="Não" class="mr-2">
-                                    <label for="marketing-nao">Não</label>
+                                    <input type="checkbox" id="pagina-facebook" name="plataformas" value="Página do Facebook" class="mr-2">
+                                    <label for="pagina-facebook">Página do Facebook (Colocar de ADM)</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="google-ads" name="plataformas" value="Google Ads" class="mr-2">
+                                    <label for="google-ads">Google Ads (Colocar de ADM)</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="tag-manager" name="plataformas" value="Google Tag Manager" class="mr-2">
+                                    <label for="tag-manager">Google Tag Manager (Colocar de ADM)</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="google-analytics" name="plataformas" value="Google Analytics" class="mr-2">
+                                    <label for="google-analytics">Google Analytics (Colocar de ADM)</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="ajuda" name="plataformas" value="Não sei adicionar usuários" class="mr-2">
+                                    <label for="ajuda">Não sei adicionar usuários, preciso de ajuda.</label>
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="instagram" name="plataformas" value="Acessos Instagram" class="mr-2">
+                                    <label for="instagram">Passar acessos do Instagram e demais redes sociais.</label>
                                 </div>
                             </div>
-                            <div id="resultados" class="hidden">
-                                <label for="resultados-texto" class="block text-sm font-medium">Se sim, quais foram os resultados obtidos?</label>
-                                <textarea id="resultados-texto" name="resultados-texto" class="w-full p-2 border rounded-md"></textarea>
-                            </div>
                         `
-                    },
-                    {
-                        title: "Seção 2: Objetivos e Desafios",
-                        content: `
-                            <div>
-                                <label for="objetivos" class="block text-sm font-medium">Quais são os principais objetivos da sua empresa?</label>
-                                <textarea id="objetivos" name="objetivos" class="w-full p-2 border rounded-md" required></textarea>
-                            </div>
-                            <div>
-                                <label for="desafios" class="block text-sm font-medium">Quais são os principais desafios que a sua empresa enfrenta atualmente?</label>
-                                <textarea id="desafios" name="desafios" class="w-full p-2 border rounded-md" required></textarea>
-                            </div>
-                            <div>
-                                <label for="metas" class="block text-sm font-medium">Quais são as principais metas que você deseja alcançar nos próximos 6-12 meses?</label>
-                                <textarea id="metas" name="metas" class="w-full p-2 border rounded-md" required></textarea>
-                            </div>
-                        `
-                    },
-                    {
-                        title: "Seção 3: Informações sobre a Empresa",
-                        content: `
-                            <div>
-                                <label for="tipo-empresa" class="block text-sm font-medium">Qual é o tipo de empresa?</label>
-                                <input type="text" id="tipo-empresa" name="tipo-empresa" class="w-full p-2 border rounded-md" required>
-                            </div>
-                            <div>
-                                <label for="tamanho-empresa" class="block text-sm font-medium">Qual é o tamanho da empresa (número de funcionários, faturamento, etc.)?</label>
-                                <textarea id="tamanho-empresa" name="tamanho-empresa" class="w-full p-2 border rounded-md" required></textarea>
-                            </div>
-                            <div>
-                                <label for="setor-industria" class="block text-sm font-medium">Qual é o setor ou indústria em que a empresa atua?</label>
-                                <input type="text" id="setor-industria" name="setor-industria" class="w-full p-2 border rounded-md" required>
-                            </div>
-                        `
-                    },
-                    {
-                        title: "Seção 4: Mercado e Concorrentes",
-                        content: `
-                            <div>
-                                <label for="concorrentes" class="block text-sm font-medium">Quais são os principais concorrentes da sua empresa?</label>
-                                <input type="text" id="concorrentes" name="concorrentes" class="w-full p-2 border rounded-md" required>
-                            </div>
-                            <div>
-                                <label for="canais-marketing" class="block text-sm font-medium">Quais são os principais canais de marketing que a sua empresa utiliza?</label>
-                                <textarea id="canais-marketing" name="canais-marketing" class="w-full p-2 border rounded-md" required></textarea>
-                            </div>
-                            <div>
-                                <label for="publico-alvo" class="block text-sm font-medium">Quais são os principais públicos-alvo da sua empresa?</label>
-                                <textarea id="publico-alvo" name="publico-alvo" class="w-full p-2 border rounded-md" required></textarea>
-                            </div>
-                        `
-                    },
-                    {
-        title: "Seção 5: Plataformas e Ferramentas",
-        content: `
-            <div>
-                <p class="text-sm font-medium">Selecione todas as opções que sua empresa utiliza:</p>
-                <div>
-                    <input type="checkbox" id="facebook-ads" name="plataformas" value="Facebook Ads" class="mr-2">
-                    <label for="facebook-ads">Facebook Ads (Colocar de ADM)</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="pagina-facebook" name="plataformas" value="Página do Facebook" class="mr-2">
-                    <label for="pagina-facebook">Página do Facebook (Colocar de ADM)</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="google-ads" name="plataformas" value="Google Ads" class="mr-2">
-                    <label for="google-ads">Google Ads (Colocar de ADM)</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="tag-manager" name="plataformas" value="Google Tag Manager" class="mr-2">
-                    <label for="tag-manager">Google Tag Manager (Colocar de ADM)</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="google-analytics" name="plataformas" value="Google Analytics" class="mr-2">
-                    <label for="google-analytics">Google Analytics (Colocar de ADM)</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="crm" name="plataformas" value="Acessos ao CRM" class="mr-2">
-                    <label for="crm">Acessos ao CRM</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="bling" name="plataformas" value="Bling" class="mr-2">
-                    <label for="bling">Bling!</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="hospedagem" name="plataformas" value="Acessos Hospedagem" class="mr-2">
-                    <label for="hospedagem">Acessos Hospedagem (Passar acesso ou Colocar de ADM)</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="dominio" name="plataformas" value="Acesso ao domínio" class="mr-2">
-                    <label for="dominio">Acesso ao domínio (Colocar de ADM)</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="wordpress" name="plataformas" value="WordPress" class="mr-2">
-                    <label for="wordpress">WordPress (Criar usuário de ADM)</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="email-marketing" name="plataformas" value="Ferramenta de E-mail Marketing" class="mr-2">
-                    <label for="email-marketing">Ferramenta de E-mail Marketing (ADM)</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="ajuda" name="plataformas" value="Não sei adicionar usuários" class="mr-2">
-                    <label for="ajuda">Não sei adicionar usuários, preciso de ajuda.</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="instagram" name="plataformas" value="Acessos Instagram" class="mr-2">
-                    <label for="instagram">Passar acessos do Instagram e demais redes sociais.</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="outros" name="plataformas" value="Outros" class="mr-2">
-                    <label for="outros">Outros</label>
-                    <textarea id="outros-descricao" name="outros-descricao" class="w-full p-2 border rounded-md mt-2 hidden"></textarea>
-                </div>
-            </div>
-            <div class="mt-4">
-                <label class="block text-sm font-medium">Você precisa de ajuda para adicionar nossos usuários às plataformas?</label>
-                <div>
-                    <input type="radio" id="ajuda-sim" name="ajuda" value="Sim" class="mr-2">
-                    <label for="ajuda-sim">Sim</label>
-                </div>
-                <div>
-                    <input type="radio" id="ajuda-nao" name="ajuda" value="Não" class="mr-2">
-                    <label for="ajuda-nao">Não</label>
-                </div>
-            </div>
-            <div id="agenda-instrucoes" class="hidden mt-4">
-                <p class="text-sm font-medium">Instruções para adicionar nossos usuários:</p>
-                <ul class="list-disc ml-4">
-                    <li>Meta (Facebook e Instagram Ads): Adicione o e-mail <strong>sylvio@v4company.com</strong>.</li>
-                    <li>Demais plataformas: Adicione o e-mail <strong>contato.franca@v4company.com</strong>.</li>
-                </ul>
-            </div>
-            <div id="agenda-embed" class="hidden mt-4">
-                <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1H6JuOL_Jh8rDVhX7G8KthPQ34tVVErnUo-yJAj12G3AmwJdog1kwFKBI_WYahPOjnu5F1ipye?gv=true" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
-            </div>
-        `
-    }
-];
+                    }
+                ];
+
                 let currentSection = 0;
                 function renderSection() {
                     const section = formSections[currentSection];
@@ -235,42 +96,8 @@
                             </button>
                         </form>
                     `;
-                    const form = document.getElementById("form-section");
-                    form.addEventListener("submit", (event) => {
-                        event.preventDefault();
-                        if (currentSection < formSections.length - 1) {
-                            currentSection++;
-                            renderSection();
-                        } else {
-                            mainContent.innerHTML = `
-                                <h2 class="text-2xl font-bold mb-4">Formulário enviado com sucesso!</h2>
-                                <p class="text-green-600 font-bold">Obrigado por preencher o formulário.</p>
-                            `;
-                        }
-                    });
-                    const marketingSim = document.getElementById('marketing-sim');
-                    const marketingNao = document.getElementById('marketing-nao');
-                    const resultados = document.getElementById('resultados');
-                    if (marketingSim && marketingNao && resultados) {
-                        marketingSim.addEventListener('change', () => {
-                            resultados.classList.remove('hidden');
-                        });
-                        marketingNao.addEventListener('change', () => {
-                            resultados.classList.add('hidden');
-                        });
-                    }
-                    const outras = document.getElementById('outras');
-                    const outrasPlataformas = document.getElementById('outras-plataformas');
-                    if (outras && outrasPlataformas) {
-                        outras.addEventListener('change', () => {
-                            if (outras.checked) {
-                                outrasPlataformas.classList.remove('hidden');
-                            } else {
-                                outrasPlataformas.classList.add('hidden');
-                            }
-                        });
-                    }
                 }
+
                 renderSection();
             });
         });
