@@ -47,37 +47,89 @@
             formLink.addEventListener('click', () => {
                 const formSections = [
                     {
+                        title: "Seção 1: Informações Iniciais",
+                        content: `
+                            <div>
+                                <label for="nome" class="block text-sm font-medium">Nome Completo:</label>
+                                <input type="text" id="nome" name="nome" class="w-full p-2 border rounded-md" required>
+                            </div>
+                            <div>
+                                <label for="empresa" class="block text-sm font-medium">Empresa:</label>
+                                <input type="text" id="empresa" name="empresa" class="w-full p-2 border rounded-md" required>
+                            </div>
+                            <div>
+                                <label for="Cargo" class="block text-sm font-medium">Cargo:</label>
+                                <input type="text" id="cargo" name="cargo" class="w-full p-2 border rounded-md" required>
+                            </div>
+                            <div>
+                                <label for="telefone" class="block text-sm font-medium">Telefone:</label>
+                                <input type="tel" id="telefone" name="telefone" class="w-full p-2 border rounded-md" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium">E-mail:</label>
+                                <input type="email" id="email" name="email" class="w-full p-2 border rounded-md" required>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "Seção 2: Objetivos e Desafios",
+                        content: `
+                            <div>
+                                <label for="objetivos" class="block text-sm font-medium">Quais são os principais objetivos da sua empresa?</label>
+                                <textarea id="objetivos" name="objetivos" class="w-full p-2 border rounded-md" required></textarea>
+                            </div>
+                            <div>
+                                <label for="desafios" class="block text-sm font-medium">Quais são os principais desafios que a sua empresa enfrenta atualmente?</label>
+                                <textarea id="desafios" name="desafios" class="w-full p-2 border rounded-md" required></textarea>
+                            </div>
+                            <div>
+                                <label for="metas" class="block text-sm font-medium">Quais são as principais metas que você deseja alcançar nos próximos 6-12 meses?</label>
+                                <textarea id="metas" name="metas" class="w-full p-2 border rounded-md" required></textarea>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "Seção 3: Informações sobre a Empresa",
+                        content: `
+                            <div>
+                                <label for="tipo-empresa" class="block text-sm font-medium">Qual é o tipo de empresa?</label>
+                                <input type="text" id="tipo-empresa" name="tipo-empresa" class="w-full p-2 border rounded-md" required>
+                            </div>
+                            <div>
+                                <label for="setor-industria" class="block text-sm font-medium">Qual é o setor ou indústria em que a empresa atua?</label>
+                                <input type="text" id="setor-industria" name="setor-industria" class="w-full p-2 border rounded-md" required>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "Seção 4: Mercado e Concorrentes",
+                        content: `
+                            <div>
+                                <label for="concorrentes" class="block text-sm font-medium">Quais são os principais concorrentes da sua empresa?</label>
+                                <input type="text" id="concorrentes" name="concorrentes" class="w-full p-2 border rounded-md" required>
+                            </div>
+                            <div>
+                                <label for="canais-marketing" class="block text-sm font-medium">Quais são os principais canais de marketing que a sua empresa utiliza?</label>
+                                <textarea id="canais-marketing" name="canais-marketing" class="w-full p-2 border rounded-md" required></textarea>
+                            </div>
+                        `
+                    },
+                    {
                         title: "Seção 5: Plataformas e Ferramentas",
                         content: `
                             <div>
                                 <p class="text-sm font-medium">Selecione todas as opções que sua empresa utiliza:</p>
                                 <div>
                                     <input type="checkbox" id="facebook-ads" name="plataformas" value="Facebook Ads" class="mr-2">
-                                    <label for="facebook-ads">Facebook Ads (Colocar de ADM)</label>
+                                    <label for="facebook-ads">Facebook Ads</label>
                                 </div>
                                 <div>
                                     <input type="checkbox" id="pagina-facebook" name="plataformas" value="Página do Facebook" class="mr-2">
-                                    <label for="pagina-facebook">Página do Facebook (Colocar de ADM)</label>
+                                    <label for="pagina-facebook">Página do Facebook</label>
                                 </div>
                                 <div>
                                     <input type="checkbox" id="google-ads" name="plataformas" value="Google Ads" class="mr-2">
-                                    <label for="google-ads">Google Ads (Colocar de ADM)</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="tag-manager" name="plataformas" value="Google Tag Manager" class="mr-2">
-                                    <label for="tag-manager">Google Tag Manager (Colocar de ADM)</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="google-analytics" name="plataformas" value="Google Analytics" class="mr-2">
-                                    <label for="google-analytics">Google Analytics (Colocar de ADM)</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="ajuda" name="plataformas" value="Não sei adicionar usuários" class="mr-2">
-                                    <label for="ajuda">Não sei adicionar usuários, preciso de ajuda.</label>
-                                </div>
-                                <div>
-                                    <input type="checkbox" id="instagram" name="plataformas" value="Acessos Instagram" class="mr-2">
-                                    <label for="instagram">Passar acessos do Instagram e demais redes sociais.</label>
+                                    <label for="google-ads">Google Ads</label>
                                 </div>
                             </div>
                         `
@@ -96,11 +148,24 @@
                             </button>
                         </form>
                     `;
+                    const form = document.getElementById("form-section");
+                    form.addEventListener("submit", (event) => {
+                        event.preventDefault();
+                        if (currentSection < formSections.length - 1) {
+                            currentSection++;
+                            renderSection();
+                        } else {
+                            mainContent.innerHTML = `
+                                <h2 class="text-2xl font-bold mb-4">Formulário enviado com sucesso!</h2>
+                                <p class="text-green-600 font-bold">Obrigado por preencher o formulário.</p>
+                            `;
+                        }
+                    });
                 }
-
                 renderSection();
             });
         });
     </script>
 </body>
 </html>
+
