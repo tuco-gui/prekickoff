@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function saveToGoogleDrive(formData) {
         console.log('Iniciando envio para Google Drive');
-        fetch('https://script.google.com/macros/s/AKfycbzwYhj2_lrXH3hUR9sY4EuAjaCIDwq7bwShgZlANjeXzRa_IrbDGIXoZKrSTKrO_qpM-Q/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbyPAXGBlDVH8fW9qLC4xB5b1xl-dVl3V7b-zRLJzMONUjm9unvE1Oa4ASYz_1uD49ICYg/exec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,13 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => {
             console.log('Resposta recebida:', response);
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                return response.text().then(text => {
+                    throw new Error(`HTTP error! status: ${response.status}, body: ${text}`);
+                });
             }
             return response.json();
         })
         .then(data => {
             console.log('Dados processados:', data);
-            if (data.success) {
+            if (data.result === 'success') {
                 console.log('Formulário processado com sucesso:', data);
                 renderSuccessPage();
             } else {
