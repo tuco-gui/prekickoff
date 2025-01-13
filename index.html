@@ -6,248 +6,549 @@
     <title>Bem-vindo à Etapa de Pré-Kickoff!</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap">
+    <style>
+        .error-message {
+            background-color: #fed7d7;
+            border: 1px solid #f56565;
+            color: #c53030;
+            padding: 12px;
+            margin-top: 12px;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
     <header class="bg-white py-4">
         <div class="container mx-auto flex justify-center">
-            <img src="V4 Company Logo" alt="V4 Company Logo" class="h-12">
+            <img src="https://v4company.com/wp-content/uploads/2022/10/logo-v4.png" alt="V4 Company Logo" class="h-12" loading="lazy">
         </div>
     </header>
-    <main id="main-content" class="container mx-auto p-4 pt-6 md:p-6 lg:p-12 xl:p-24">
+    <main id="main-content" class="container mx-auto p-4 pt-6 md:p-6 lg:p-12 xl:p-24 max-w-4xl">
         <h1 class="text-3xl font-bold mb-4">Bem-vindo à Etapa de Pré-Kickoff!</h1>
         <p class="text-lg mb-8">Olá! Você está na etapa inicial e fundamental do nosso projeto: a Pré-Kickoff. Antes de seguirmos, precisamos esclarecer uma dúvida importante.</p>
         <p class="text-lg mb-8">Você já assistiu à aula da Growth Class?</p>
         <div class="flex justify-center mb-8">
-            <a id="sim" href="javascript:void(0)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Sim, já assisti</a>
-            <a href="https://vendas.v4company.com/growth-class-1/?utm_gc=001N400000GgpONIAZ" target="_blank" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md ml-4">Não, assistir agora</a>
+            <button id="sim" aria-label="Confirmar que já assistiu à aula" role="button" tabindex="0" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Sim, já assisti</button>
+            <a href="https://vendas.v4company.com/growth-class-1/?utm_gc=001N400000GgpONIAZ"  class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md ml-4">Não, assistir agora</a>
         </div>
     </main>
     <script>
-        const mainContent = document.getElementById('main-content');
-        const simButton = document.getElementById('sim');
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainContent = document.getElementById('main-content');
+            const simButton = document.getElementById('sim');
+            let formState = {};
+            let currentSection = 0;
+            let isReviewing = false;
 
-        simButton.addEventListener('click', () => {
-            mainContent.innerHTML = `
-                <h2 class="text-2xl font-bold mb-4">O que é a etapa de Pré-Kickoff?</h2>
-                <p class="text-lg mb-8">A etapa de Pré-Kickoff é o momento em que organizamos todas as informações fundamentais do seu negócio. É aqui que começamos a construir a base sólida para o planejamento estratégico. Nosso objetivo é conhecer a fundo suas necessidades, objetivos, desafios e expectativas. Com isso, conseguimos desenhar um plano alinhado com os resultados que você deseja alcançar.</p>
-                <h2 class="text-2xl font-bold mb-4">Por que a etapa de Pré-Kickoff é tão importante?</h2>
-                <p class="text-lg mb-8">Alinhamento Estratégico: Com informações completas e precisas, conseguimos criar uma estratégia personalizada e eficaz.</p>
-                <p class="text-lg mb-8">Diagnóstico Preciso: Identificamos os pontos fortes do seu negócio e os desafios para gerar resultados consistentes.</p>
-                <p class="text-lg mb-8">Eficiência no Planejamento: Quanto mais dados tivermos agora, mais eficiente será o planejamento e a execução das ações nos próximos passos do projeto.</p>
-                <h2 class="text-2xl font-bold mb-4">Como funciona esta etapa?</h2>
-                <p class="text-lg mb-8">Preenchimento do Formulário de Diagnóstico Inicial: Ele foi criado para nos ajudar a entender suas prioridades e o cenário atual do seu negócio. Dedique-se ao preenchimento, pois suas respostas serão o ponto de partida para nosso planejamento.</p>
-                <p class="text-lg mb-8">Revisão e Alinhamento Interno: Nossa equipe analisa as informações enviadas e prepara os próximos passos.</p>
-                <p class="text-lg mb-8">Kickoff: Após essa etapa, realizaremos a reunião de Kickoff, onde definiremos as metas e estratégias personalizadas.</p>
-                <div class="flex justify-center mb-8">
-                    <a id="form-link" href="javascript:void(0)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Acessar Formulário de Diagnóstico Inicial</a>
-                </div>
-            `;
+            simButton.addEventListener('click', renderPreKickoffContent);
 
-            const formLink = document.getElementById('form-link');
-            formLink.addEventListener('click', () => {
-                const formSections = [
-                    {
-                        title: "Seção 1: Informações Iniciais",
-                        content: `
-                            <div>
-                                <label for="nome" class="block text-sm font-medium">Nome Completo:</label>
-                                <input type="text" id="nome" name="nome" class="w-full p-2 border rounded-md" required>
-                            </div>
-                            <div>
-                                <label for="empresa" class="block text-sm font-medium">Empresa:</label>
-                                <input type="text" id="empresa" name="empresa" class="w-full p-2 border rounded-md" required>
-                            </div>
-                            <div>
-                                <label for="Cargo" class="block text-sm font-medium">Cargo:</label>
-                                <input type="text" id="cargo" name="cargo" class="w-full p-2 border rounded-md" required>
-                            </div>
-                            <div>
-                                <label for="telefone" class="block text-sm font-medium">Telefone:</label>
-                                <input type="tel" id="telefone" name="telefone" class="w-full p-2 border rounded-md" required>
-                            </div>
-                            <div>
-                                <label for="email" class="block text-sm font-medium">E-mail:</label>
-                                <input type="email" id="email" name="email" class="w-full p-2 border rounded-md" required>
-                            </div>
-                        `
-                    },
-                    {
-                        title: "Seção 2: Objetivos e Desafios",
-                        content: `
-                            <div>
-                                <label for="objetivos" class="block text-sm font-medium">Quais são os principais objetivos da sua empresa?</label>
-                                <textarea id="objetivos" name="objetivos" class="w-full p-2 border rounded-md" required></textarea>
-                            </div>
-                            <div>
-                                <label for="desafios" class="block text-sm font-medium">Quais são os principais desafios que a sua empresa enfrenta atualmente?</label>
-                                <textarea id="desafios" name="desafios" class="w-full p-2 border rounded-md" required></textarea>
-                            </div>
-                            <div>
-                                <label for="metas" class="block text-sm font-medium">Quais são as principais metas que você deseja alcançar nos próximos 6-12 meses?</label>
-                                <textarea id="metas" name="metas" class="w-full p-2 border rounded-md" required></textarea>
-                            </div>
-                        `
-                    },
-                    {
-                        title: "Seção 3: Informações sobre a Empresa",
-                        content: `
-                            <div>
-                                <label for="tipo-empresa" class="block text-sm font-medium">Qual é o tipo de empresa?</label>
-                                <input type="text" id="tipo-empresa" name="tipo-empresa" class="w-full p-2 border rounded-md" required>
-                            </div>
-                            <div>
-                                <label for="setor-industria" class="block text-sm font-medium">Qual é o setor ou indústria em que a empresa atua?</label>
-                                <input type="text" id="setor-industria" name="setor-industria" class="w-full p-2 border rounded-md" required>
-                            </div>
-                        `
-                    },
-                    {
-                        title: "Seção 4: Mercado e Concorrentes",
-                        content: `
-                            <div>
-                                <label for="concorrentes" class="block text-sm font-medium">Quais são os principais concorrentes da sua empresa?</label>
-                                <input type="text" id="concorrentes" name="concorrentes" class="w-full p-2 border rounded-md" required>
-                            </div>
-                            <div>
-                                <label for="canais-marketing" class="block text-sm font-medium">Quais são os principais canais de marketing que a sua empresa utiliza?</label>
-                                <textarea id="canais-marketing" name="canais-marketing" class="w-full p-2 border rounded-md" required></textarea>
-                            </div>
-                        `
-                    },
-                    {
-    title: "Seção 5: Plataformas e Ferramentas",
-    content: `
-        <div>
-            <p class="text-sm font-medium">Selecione todas as opções que sua empresa utiliza:</p>
-            <div>
-                <input type="checkbox" id="facebook-ads" name="plataformas" value="Facebook Ads" class="mr-2">
-                <label for="facebook-ads">Facebook Ads (Colocar de ADM)</label>
-            </div>
-            <div>
-                <input type="checkbox" id="pagina-facebook" name="plataformas" value="Página do Facebook" class="mr-2">
-                <label for="pagina-facebook">Página do Facebook (Colocar de ADM)</label>
-            </div>
-            <div>
-                <input type="checkbox" id="google-ads" name="plataformas" value="Google Ads" class="mr-2">
-                <label for="google-ads">Google Ads (Colocar de ADM)</label>
-            </div>
-            <div>
-                <input type="checkbox" id="tag-manager" name="plataformas" value="Google Tag Manager" class="mr-2">
-                <label for="tag-manager">Google Tag Manager (Colocar de ADM)</label>
-            </div>
-            <div>
-                <input type="checkbox" id="google-analytics" name="plataformas" value="Google Analytics" class="mr-2">
-                <label for="google-analytics">Google Analytics (Colocar de ADM)</label>
-            </div>
-            <div>
-                <input type="checkbox" id="crm" name="plataformas" value="Acessos ao CRM" class="mr-2">
-                <label for="crm">Acessos ao CRM</label>
-            </div>
-            <div>
-                <input type="checkbox" id="bling" name="plataformas" value="Bling" class="mr-2">
-                <label for="bling">Bling!</label>
-            </div>
-            <div>
-                <input type="checkbox" id="hospedagem" name="plataformas" value="Acessos Hospedagem" class="mr-2">
-                <label for="hospedagem">Acessos Hospedagem (Passar acesso ou Colocar de ADM)</label>
-            </div>
-            <div>
-                <input type="checkbox" id="dominio" name="plataformas" value="Acesso ao domínio" class="mr-2">
-                <label for="dominio">Acesso ao domínio (Colocar de ADM)</label>
-            </div>
-            <div>
-                <input type="checkbox" id="wordpress" name="plataformas" value="WordPress" class="mr-2">
-                <label for="wordpress">WordPress (Criar usuário de ADM)</label>
-            </div>
-            <div>
-                <input type="checkbox" id="email-marketing" name="plataformas" value="Ferramenta de E-mail Marketing" class="mr-2">
-                <label for="email-marketing">Ferramenta de E-mail Marketing (ADM)</label>
-            </div>
-            <div>
-                <input type="checkbox" id="ajuda" name="plataformas" value="Não sei adicionar usuários" class="mr-2">
-                <label for="ajuda">Não sei adicionar usuários, preciso de ajuda.</label>
-            </div>
-            <div>
-                <input type="checkbox" id="instagram" name="plataformas" value="Acessos Instagram" class="mr-2">
-                <label for="instagram">Passar acessos do Instagram e demais redes sociais.</label>
-            </div>
-            <div>
-                <input type="checkbox" id="outros" name="plataformas" value="Outros" class="mr-2">
-                <label for="outros">Outros</label>
-                <textarea id="outros-descricao" name="outros-descricao" class="w-full p-2 border rounded-md mt-2 hidden"></textarea>
-            </div>
-        </div>
-        <div class="mt-4">
-            <label class="block text-sm font-medium">Você precisa de ajuda para adicionar nossos usuários às plataformas?</label>
-            <div>
-                <input type="radio" id="ajuda-sim" name="ajuda" value="Sim" class="mr-2">
-                <label for="ajuda-sim">Sim</label>
-            </div>
-            <div>
-                <input type="radio" id="ajuda-nao" name="ajuda" value="Não" class="mr-2">
-                <label for="ajuda-nao">Não</label>
-            </div>
-        </div>
-        <div id="agenda-instrucoes" class="hidden mt-4">
-            <p class="text-sm font-medium">Instruções para adicionar nossos usuários:</p>
-            <ul class="list-disc ml-4">
-                <li>Meta (Facebook e Instagram Ads): Adicione o e-mail <strong>sylvio@v4company.com</strong>.</li>
-                <li>Demais plataformas: Adicione o e-mail <strong>contato.franca@v4company.com</strong>.</li>
-            </ul>
-        </div>
-        <div id="agenda-embed" class="hidden mt-4">
-            <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1H6JuOL_Jh8rDVhX7G8KthPQ34tVVErnUo-yJAj12G3AmwJdog1kwFKBI_WYahPOjnu5F1ipye?gv=true" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
-        </div>
-    `,
-    logic: `
-        const ajudaSim = document.getElementById('ajuda-sim');
-        const ajudaNao = document.getElementById('ajuda-nao');
-        const agendaInstrucoes = document.getElementById('agenda-instrucoes');
-        const agendaEmbed = document.getElementById('agenda-embed');
+            function updateFormState(key, value) {
+                formState[key] = value;
+                localStorage.setItem('formState', JSON.stringify(formState));
+            }
 
-        if (ajudaSim && ajudaNao && agendaInstrucoes && agendaEmbed) {
-            ajudaSim.addEventListener('change', () => {
-                agendaInstrucoes.classList.add('hidden');
-                agendaEmbed.classList.remove('hidden');
-            });
+            function handleError(error) {
+                console.error('Ocorreu um erro:', error);
+                const errorMessage = document.createElement('div');
+                errorMessage.textContent = 'Ocorreu um erro. Por favor, tente novamente mais tarde.';
+                errorMessage.className = 'error-message';
+                document.body.appendChild(errorMessage);
+            }
 
-            ajudaNao.addEventListener('change', () => {
-                agendaInstrucoes.classList.remove('hidden');
-                agendaEmbed.classList.add('hidden');
-            });
-        }
-    `
-}
-                let currentSection = 0;
-                function renderSection() {
-                    const section = formSections[currentSection];
+            function renderPreKickoffContent() {
+                try {
                     mainContent.innerHTML = `
-                        <h2 class="text-2xl font-bold mb-4">${section.title}</h2>
-                        <form id="form-section" class="space-y-6">
-                            ${section.content}
-                            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">
-                                ${currentSection === formSections.length - 1 ? "Enviar" : "Próximo"}
-                            </button>
-                        </form>
+                        <h2 class="text-2xl font-bold mb-4">O que é a etapa de Pré-Kickoff?</h2>
+                        <p class="text-lg mb-8">A etapa de Pré-Kickoff é o momento em que organizamos todas as informações fundamentais do seu negócio. É aqui que começamos a construir a base sólida para o planejamento estratégico. Nosso objetivo é conhecer a fundo suas necessidades, objetivos, desafios e expectativas. Com isso, conseguimos desenhar um plano alinhado com os resultados que você deseja alcançar.</p>
+                        <h2 class="text-2xl font-bold mb-4">Por que a etapa de Pré-Kickoff é tão importante?</h2>
+                        <p class="text-lg mb-8">Alinhamento Estratégico: Com informações completas e precisas, conseguimos criar uma estratégia personalizada e eficaz.</p>
+                        <p class="text-lg mb-8">Diagnóstico Preciso: Identificamos os pontos fortes do seu negócio e os desafios para gerar resultados consistentes.</p>
+                        <p class="text-lg mb-8">Eficiência no Planejamento: Quanto mais dados tivermos agora, mais eficiente será o planejamento e a execução das ações nos próximos passos do projeto.</p>
+                        <h2 class="text-2xl font-bold mb-4">Como funciona esta etapa?</h2>
+                        <p class="text-lg mb-8">Preenchimento do Formulário de Diagnóstico Inicial: Ele foi criado para nos ajudar a entender suas prioridades e o cenário atual do seu negócio. Dedique-se ao preenchimento, pois suas respostas serão o ponto de partida para nosso planejamento.</p>
+                        <p class="text-lg mb-8">Revisão e Alinhamento Interno: Nossa equipe analisa as informações enviadas e prepara os próximos passos.</p>
+                        <p class="text-lg mb-8">Kickoff: Após essa etapa, realizaremos a reunião de Kickoff, onde definiremos as metas e estratégias personalizadas.</p>
+                        <div class="flex justify-center mb-8">
+                            <button id="form-link" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Acessar Formulário de Diagnóstico Inicial</button>
+                        </div>
                     `;
-                    const form = document.getElementById("form-section");
-                    form.addEventListener("submit", (event) => {
-                        event.preventDefault();
-                        if (currentSection < formSections.length - 1) {
+
+                    const formLink = document.getElementById('form-link');
+                    formLink.addEventListener('click', () => renderFormSections(0));
+                } catch (error) {
+                    handleError(error);
+                }
+            }
+
+            function renderFormSections(startSection = 0) {
+                try {
+                    const formSections = [
+                        {
+                            title: "Seção 1: Informações Iniciais",
+                            content: `
+                                <div>
+                                    <label for="nome" class="block text-sm font-medium">Nome Completo:</label>
+                                    <input type="text" id="nome" name="nome" class="w-full p-2 border rounded-md" required>
+                                </div>
+                                <div>
+                                    <label for="empresa" class="block text-sm font-medium">Empresa:</label>
+                                    <input type="text" id="empresa" name="empresa" class="w-full p-2 border rounded-md" required>
+                                </div>
+                                <div>
+                                    <label for="cargo" class="block text-sm font-medium">Cargo:</label>
+                                    <input type="text" id="cargo" name="cargo" class="w-full p-2 border rounded-md" required>
+                                </div>
+                                <div>
+                                    <label for="telefone" class="block text-sm font-medium">Telefone:</label>
+                                    <input type="tel" id="telefone" name="telefone" class="w-full p-2 border rounded-md" required>
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium">E-mail:</label>
+                                    <input type="email" id="email" name="email" class="w-full p-2 border rounded-md" required>
+                                </div>
+                            `
+                        },
+                        {
+                            title: "Seção 2: Objetivos e Desafios",
+                            content: `
+                                <div>
+                                    <label for="objetivos" class="block text-sm font-medium">Quais são os principais objetivos da sua empresa?</label>
+                                    <textarea id="objetivos" name="objetivos" class="w-full p-2 border rounded-md" required></textarea>
+                                </div>
+                                <div>
+                                    <label for="desafios" class="block text-sm font-medium">Quais são os principais desafios que a sua empresa enfrenta atualmente?</label>
+                                    <textarea id="desafios" name="desafios" class="w-full p-2 border rounded-md" required></textarea>
+                                </div>
+								<div>
+									<label for="kpis" class="block text-sm font-medium">Quais são os principais indicadores de desempenho (KPIs) que você usa para medir o sucesso da sua empresa?</label>
+									<input type="text" id="kpis" name="kpis" class="w-full p-2 border rounded-md" required>
+								</div>
+                                <div>
+                                    <label for="metas" class="block text-sm font-medium">Quais são as principais metas que você deseja alcançar nos próximos 6-12 meses?</label>
+                                    <textarea id="metas" name="metas" class="w-full p-2 border rounded-md" required></textarea>
+                                </div>
+                            `
+                        },
+                        {
+                            title: "Seção 3: Informações sobre a Empresa",
+                            content: `
+                                <div>
+									<label for="tipo-empresa" class="block text-sm font-medium">Qual é o tipo de empresa?</label>
+									<select id="tipo-empresa" name="tipo-empresa" class="w-full p-2 border rounded-md" required>
+									<option value="">Selecione uma opção</option>
+									<option value="Produtos físicos">Produtos físicos</option>
+									<option value="Serviços">Serviços</option>
+									<option value="SaaS">SaaS</option>
+									<option value="E-commerce">E-commerce</option>
+									<option value="Educação">Educação</option>
+									<option value="Consultoria">Consultoria</option>
+									<option value="Outros">Outros</option>
+									</select>
+								</div>
+								<div>
+									<label for="produtos-servicos" class="block text-sm font-medium">Quais produtos ou serviços sua empresa oferece?</label>
+									<textarea id="produtos-servicos" name="produtos-servicos" class="w-full p-2 border rounded-md"></textarea>
+								</div>
+
+								<div>
+									<label for="modelo-negocio" class="block text-sm font-medium">Qual é o modelo de negócio da sua empresa?</label>
+									<select id="modelo-negocio" name="modelo-negocio" class="w-full p-2 border rounded-md" required>
+									<option value="">Selecione uma opção</option>
+									<option value="B2B">B2B</option>
+									<option value="B2C">B2C</option>
+									<option value="B2B2C">B2B2C</option>
+									<option value="Outros">Outros</option>
+									</select>
+								</div>
+								<div>
+									<label class="block text-sm font-medium">Você já fez algum tipo de estratégia de marketing antes?</label>
+								<div>
+									<input type="radio" id="estrategia-sim" name="estrategia-marketing" value="Sim" class="mr-2">
+									<label for="estrategia-sim">Sim</label>
+								</div>
+								<div>
+										<input type="radio" id="estrategia-nao" name="estrategia-marketing" value="Não" class="mr-2">
+										<label for="estrategia-nao">Não</label>
+									</div>
+								</div>
+
+								<div id="resultados-estrategia" style="display: none;">
+									<label for="resultados-marketing" class="block text-sm font-medium">Quais foram os resultados?</label>
+									<textarea id="resultados-marketing" name="resultados-marketing" class="w-full p-2 border rounded-md" maxlength="255"></textarea>
+								</div>
+								<div>
+									<label for="tamanho-empresa" class="block text-sm font-medium">Qual é o tamanho da empresa? (Número de funcionários, faturamento aproximado ou qualquer outra métrica relevante)</label>
+									<textarea id="tamanho-empresa" name="tamanho-empresa" class="w-full p-2 border rounded-md" required></textarea>
+								</div>
+								<div>
+									<label for="produtos-servicos" class="block text-sm font-medium">Quais são os principais produtos ou serviços oferecidos pela empresa?</label>
+									<textarea id="produtos-servicos" name="produtos-servicos" class="w-full p-2 border rounded-md" required></textarea>
+								</div>
+                                <div>
+                                    <label for="setor-industria" class="block text-sm font-medium">Qual é o setor ou indústria em que a empresa atua?</label>
+                                    <input type="text" id="setor-industria" name="setor-industria" class="w-full p-2 border rounded-md" required>
+                                </div>
+                            `
+                        },
+                        {
+                            title: "Seção 4: Mercado e Concorrentes",
+                            content: `
+                                <div>
+                                    <label for="concorrentes" class="block text-sm font-medium">Quais são os principais concorrentes da sua empresa?</label>
+                                    <input type="text" id="concorrentes" name="concorrentes" class="w-full p-2 border rounded-md" required>
+                                </div>
+								<div>
+									<label for="publicos-alvo" class="block text-sm font-medium">Quais são os principais públicos-alvo da sua empresa?</label>
+									<textarea id="publicos-alvo" name="publicos-alvo" class="w-full p-2 border rounded-md" required></textarea>
+								</div>
+								<div>
+									<label for="necessidades-clientes" class="block text-sm font-medium">Quais são as principais necessidades e desejos dos seus clientes?</label>
+									<textarea id="necessidades-clientes" name="necessidades-clientes" class="w-full p-2 border rounded-md" required></textarea>
+								</div>
+                                <div>
+                                    <label for="canais-marketing" class="block text-sm font-medium">Quais são os principais canais de marketing que a sua empresa utiliza?</label>
+                                    <textarea id="canais-marketing" name="canais-marketing" class="w-full p-2 border rounded-md" required></textarea>
+                                </div>
+                            `
+                        },
+                        {
+                            title: "Seção 5: Plataformas e Ferramentas",
+                            content: `
+                                <div>
+                                    <p class="text-sm font-medium">Selecione todas as opções que sua empresa utiliza:</p>
+                                    <div>
+                                        <input type="checkbox" id="facebook-ads" name="plataformas" value="Facebook Ads" class="mr-2">
+                                        <label for="facebook-ads">Facebook Ads</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="pagina-facebook" name="plataformas" value="Página do Facebook" class="mr-2">
+                                        <label for="pagina-facebook">Página do Facebook</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="google-ads" name="plataformas" value="Google Ads" class="mr-2">
+                                        <label for="google-ads">Google Ads</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="tag-manager" name="plataformas" value="Google Tag Manager" class="mr-2">
+                                        <label for="tag-manager">Google Tag Manager</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="google-analytics" name="plataformas" value="Google Analytics" class="mr-2">
+                                        <label for="google-analytics">Google Analytics</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="crm" name="plataformas" value="Acessos ao CRM" class="mr-2">
+                                        <label for="crm">Acessos ao CRM</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="bling" name="plataformas" value="Bling" class="mr-2">
+                                        <label for="bling">Bling!</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="hospedagem" name="plataformas" value="Acessos Hospedagem" class="mr-2">
+                                        <label for="hospedagem">Acessos Hospedagem</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="dominio" name="plataformas" value="Acesso ao domínio" class="mr-2">
+                                        <label for="dominio">Acesso ao domínio</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="wordpress" name="plataformas" value="WordPress" class="mr-2">
+                                        <label for="wordpress">WordPress</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="email-marketing" name="plataformas" value="Ferramenta de E-mail Marketing" class="mr-2">
+                                        <label for="email-marketing">Ferramenta de E-mail Marketing</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="ajuda" name="plataformas" value="Não sei adicionar usuários" class="mr-2">
+                                        <label for="ajuda">Não sei adicionar usuários, preciso de ajuda.</label>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" id="outros" name="plataformas" value="Outros" class="mr-2">
+                                        <label for="outros">Outros</label>
+                                        <textarea id="outros-descricao" name="outros-descricao" class="w-full p-2 border rounded-md mt-2 hidden"></textarea>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <label class="block text-sm font-medium">Você precisa de ajuda para adicionar nossos usuários às plataformas?</label>
+                                    <div>
+                                        <input type="radio" id="ajuda-sim" name="ajuda" value="Sim" class="mr-2">
+                                        <label for="ajuda-sim">Sim</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" id="ajuda-nao" name="ajuda" value="Não" class="mr-2">
+                                        <label for="ajuda-nao">Não</label>
+                                    </div>
+                                </div>
+                                <div id="agenda-instrucoes" class="hidden mt-4">
+                                    <p class="text-sm font-medium">Instruções para adicionar nossos usuários:</p>
+                                    <ul class="list-disc ml-4">
+                                        <li>Meta (Facebook e Instagram Ads): Adicione o e-mail <strong>sylvio@v4company.com</strong>.</li>
+                                        <li>Demais plataformas: Adicione o e-mail <strong>contato.franca@v4company.com</strong>.</li>
+                                    </ul>
+                                </div>
+                                <div id="agenda-embed" class="hidden mt-4">
+                                    <iframe src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ1H6JuOL_Jh8rDVhX7G8KthPQ34tVVErnUo-yJAj12G3AmwJdog1kwFKBI_WYahPOjnu5F1ipye?gv=true" style="border: 0" width="100%" height="600" frameborder="0"></iframe>
+                                </div>
+                            `
+                        },
+                        {
+                            title: "Seção 6: Outras Informações",
+                            content: `
+                                <div>
+                                    <label for="oportunidades" class="block text-sm font-medium">Quais são as principais oportunidades de crescimento para a sua empresa?</label>
+                                    <textarea id="oportunidades" name="oportunidades" class="w-full p-2 border rounded-md" required></textarea>
+                                </div>
+                                <div>
+                                    <label for="ameacas" class="block text-sm font-medium">Quais são as principais ameaças para a sua empresa?</label>
+                                    <textarea id="ameacas" name="ameacas" class="w-full p-2 border rounded-md" required></textarea>
+                                </div>
+                                <div>
+                                    <label for="iniciativas" class="block text-sm font-medium">Quais são as principais iniciativas de marketing que a sua empresa está planejando para os próximos 6-12 meses?</label>
+                                    <textarea id="iniciativas" name="iniciativas" class="w-full p-2 border rounded-md" required></textarea>
+                                </div>
+                                <div>
+                                    <label for="expectativas" class="block text-sm font-medium">Quais são as principais expectativas que você tem em relação à nossa equipe?</label>
+                                    <textarea id="expectativas" name="expectativas" class="w-full p-2 border rounded-md" required></textarea>
+                                </div>
+                            `
+                        }
+                     ];
+
+                    let formHTML = '';
+                    formSections.forEach((section, index) => {
+                        formHTML += `
+                            <div class="form-section" style="display: ${index === startSection ? 'block' : 'none'}">
+                                <h2 class="text-2xl font-bold mb-4">${section.title}</h2>
+                                ${section.content}
+                            </div>
+                        `;
+                    });
+
+                    formHTML += `
+                        <div class="flex justify-end mt-8">
+                            <button id="next" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Próximo</button>
+                        </div>
+                    `;
+
+                    mainContent.innerHTML = formHTML;
+
+                    const sections = document.querySelectorAll('.form-section');
+                    const nextButton = document.getElementById('next');
+                    
+                    currentSection = startSection;
+
+                    nextButton.addEventListener('click', () => {
+                        if (currentSection < sections.length - 1) {
                             currentSection++;
-                            renderSection();
+                            showSection(currentSection);
                         } else {
-                            mainContent.innerHTML = `
-                                <h2 class="text-2xl font-bold mb-4">Formulário enviado com sucesso!</h2>
-                                <p class="text-green-600 font-bold">Obrigado por preencher o formulário.</p>
-                            `;
+                            renderReviewPage();
                         }
                     });
+
+                    showSection(startSection);
+                } catch (error) {
+                    handleError(error);
                 }
-                renderSection();
-            });
+            }
+
+            function showSection(index) {
+                const sections = document.querySelectorAll('.form-section');
+                const nextButton = document.getElementById('next');
+                
+                sections.forEach((section, i) => {
+                    section.style.display = i === index ? 'block' : 'none';
+                });
+                nextButton.textContent = index === sections.length - 1 ? 'Revisar Respostas' : 'Próximo';
+
+                // Remover botões de revisão existentes
+                const existingOptionsDiv = document.querySelector('.review-options');
+                if (existingOptionsDiv) {
+                    existingOptionsDiv.remove();
+                }
+
+                if (isReviewing) {
+                    nextButton.style.display = 'none';
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'flex justify-between mt-4 review-options';
+                    optionsDiv.innerHTML = `
+                        <button id="finish-edit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Finalizar Edição</button>
+                        <button id="continue-next" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Continuar para Próxima Seção</button>
+                    `;
+                    sections[index].appendChild(optionsDiv);
+
+                    document.getElementById('finish-edit').addEventListener('click', renderReviewPage);
+                    document.getElementById('continue-next').addEventListener('click', () => {
+                        if (currentSection < sections.length - 1) {
+                            currentSection++;
+                            showSection(currentSection);
+                        } else {
+                            renderReviewPage();
+                        }
+                    });
+                } else {
+                    nextButton.style.display = 'block';
+                }
+
+                // Lógica para a Seção 5
+                if (index === 4) {
+                    const ajudaSim = document.getElementById('ajuda-sim');
+                    const ajudaNao = document.getElementById('ajuda-nao');
+                    const agendaInstrucoes = document.getElementById('agenda-instrucoes');
+                    const agendaEmbed = document.getElementById('agenda-embed');
+                    const outrosCheckbox = document.getElementById('outros');
+                    const outrosDescricao = document.getElementById('outros-descricao');
+
+                    if (ajudaSim && ajudaNao && agendaInstrucoes && agendaEmbed) {
+                        ajudaSim.addEventListener('change', () => {
+                            agendaEmbed.style.display = 'block';
+                            agendaInstrucoes.style.display = 'none';
+                        });
+
+                        ajudaNao.addEventListener('change', () => {
+                            agendaInstrucoes.style.display = 'block';
+                            agendaEmbed.style.display = 'none';
+                        });
+                    }
+
+                    if (outrosCheckbox && outrosDescricao) {
+                        outrosCheckbox.addEventListener('change', () => {
+                            outrosDescricao.style.display = outrosCheckbox.checked ? 'block' : 'none';
+                        });
+                    }
+                }
+
+                // Lógica para a pergunta sobre estratégia de marketing
+                const estrategiaSim = document.getElementById('estrategia-sim');
+                const estrategiaNao = document.getElementById('estrategia-nao');
+                const resultadosEstrategia = document.getElementById('resultados-estrategia');
+
+                if (estrategiaSim && estrategiaNao && resultadosEstrategia) {
+                    const handleEstrategiaChange = () => {
+                        resultadosEstrategia.style.display = estrategiaSim.checked ? 'block' : 'none';
+                    };
+
+                    estrategiaSim.addEventListener('change', handleEstrategiaChange);
+                    estrategiaNao.addEventListener('change', handleEstrategiaChange);
+
+                    // Verifica o estado inicial
+                    handleEstrategiaChange();
+                }
+
+                // Atualizar formState com as respostas
+                document.querySelectorAll('input, textarea, select').forEach(element => {
+                    element.addEventListener('change', (e) => {
+                        if (e.target.type === 'checkbox') {
+                            updateFormState(`section${currentSection + 1}_${e.target.name}_${e.target.value}`, e.target.checked);
+                        } else if (e.target.type === 'radio') {
+                            updateFormState(`section${currentSection + 1}_${e.target.name}`, e.target.value);
+                        } else {
+                            updateFormState(`section${currentSection + 1}_${e.target.name}`, e.target.value);
+                        }
+                    });
+                });
+
+                // Carregar respostas salvas
+                for (let key in formState) {
+                    if (key.startsWith(`section${currentSection + 1}_`)) {
+                        const [, , name, value] = key.split('_');
+                        const element = document.getElementById(name);
+                        if (element) {
+                            if (element.type === 'checkbox') {
+                                if (element.value === value) {
+                                    element.checked = formState[key];
+                                }
+                            } else if (element.type === 'radio') {
+                                if (element.value === formState[key]) {
+                                    element.checked = true;
+                                }
+                            } else {
+                                element.value = formState[key];
+                            }
+                        }
+                    }
+                }
+            }
+
+            function renderReviewPage() {
+                isReviewing = false;
+                let reviewHTML = `
+                    <h2 class="text-2xl font-bold mb-4">Revise suas respostas</h2>
+                `;
+
+                const sectionTitles = [
+                    "Seção 1: Informações Iniciais",
+                    "Seção 2: Objetivos e Desafios",
+                    "Seção 3: Informações sobre a Empresa",
+                    "Seção 4: Mercado e Concorrentes",
+                    "Seção 5: Plataformas e Ferramentas",
+                    "Seção 6: Outras Informações"
+                ];
+
+                sectionTitles.forEach((title, index) => {
+                    reviewHTML += `
+                        <div class="mb-6">
+                            <h3 class="text-xl font-bold mb-2">${title}</h3>
+                            <div class="pl-4">
+                    `;
+
+                    for (let key in formState) {
+                        if (key.startsWith(`section${index + 1}_`)) {
+                            const [, , name, value] = key.split('_');
+                            if (value) {
+                                reviewHTML += `<p><strong>${name}</strong>: ${formState[key] ? 'Sim' : 'Não'}</p>`;
+                            } else {
+                                reviewHTML += `<p><strong>${name}</strong>: ${formState[key]}</p>`;
+                            }
+                        }
+                    }
+
+                    reviewHTML += `
+                            </div>
+                            <button class="edit-section bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-md mt-2" data-section="${index}">Editar esta seção</button>
+                        </div>
+                    `;
+                });
+
+                reviewHTML += `
+                    <div class="flex justify-between mt-8">
+                        <button id="restart" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-md">Voltar para o início</button>
+                        <button id="finalize" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md">Finalizar</button>
+                    </div>
+                `;
+
+                mainContent.innerHTML = reviewHTML;
+
+                document.getElementById('restart').addEventListener('click', () => {
+                    currentSection = 0;
+                    formState = {};
+                    renderFormSections(0);
+                });
+
+                document.getElementById('finalize').addEventListener('click', renderSuccessPage);
+
+                document.querySelectorAll('.edit-section').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const sectionToEdit = parseInt(e.target.dataset.section);
+                        isReviewing = true;
+                        renderFormSections(sectionToEdit);
+                    });
+                });
+            }
+
+            function renderSuccessPage() {
+                mainContent.innerHTML = `
+                    <div class="text-center">
+                        <h2 class="text-3xl font-bold mb-4">Formulário enviado com sucesso!</h2>
+                        <p class="text-lg text-green-600">Obrigado por preencher o formulário.</p>
+                    </div>
+                `;
+            }
         });
     </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="email_pdf_script.js"></script>
 </body>
 </html>
-
