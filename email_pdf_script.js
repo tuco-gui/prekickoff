@@ -1,108 +1,78 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM carregado');
 
-    function collectFormData() {
+    function coletarDadosFormulario() {
         console.log('Coletando dados do formulário');
-        const formData = {};
-        document.querySelectorAll('input, textarea, select').forEach((element) => {
-            if (element.type === 'checkbox') {
-                if (!formData[element.name]) {
-                    formData[element.name] = [];
-                }
-                if (element.checked) {
-                    formData[element.name].push(element.value);
-                }
-            } else if (element.type === 'radio') {
-                if (element.checked) {
-                    formData[element.name] = element.value;
-                }
-            } else {
-                formData[element.name] = element.value;
-            }
-        });
-        console.log('Dados coletados:', formData);
-        return formData;
+        const form = document.querySelector('form');
+        const formData = new FormData(form);
+        const dadosObj = {};
+        for (let [key, value] of formData.entries()) {
+            dadosObj[key] = value;
+        }
+        console.log('Dados coletados:', dadosObj);
+        return dadosObj;
     }
 
-    function saveToGoogleDrive(formData) {
+    async function saveToGoogleDrive(dados) {
         console.log('Iniciando envio para Google Drive');
-        fetch('https://script.google.com/macros/s/AKfycbyPAXGBlDVH8fW9qLC4xB5b1xl-dVl3V7b-zRLJzMONUjm9unvE1Oa4ASYz_1uD49ICYg/exec', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-        .then(response => {
-            console.log('Resposta recebida:', response);
+        const url = 'https://script.google.com/macros/s/AKfycbxLqlVWKh2QrvBm4unjboikQZl5WEEzQZ3gLLc44CqpZkBCa6_K4IucIrSBGHUKDAalwg/exec';
+        
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dados)
+            });
+
             if (!response.ok) {
-                return response.text().then(text => {
-                    throw new Error(`HTTP error! status: ${response.status}, body: ${text}`);
-                });
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Dados processados:', data);
-            if (data.result === 'success') {
-                console.log('Formulário processado com sucesso:', data);
-                renderSuccessPage();
-            } else {
-                console.error('Erro ao processar o formulário:', data.error);
-                alert('Ocorreu um erro ao processar o formulário. Por favor, tente novamente.');
-            }
-        })
-        .catch(error => {
+
+            const result = await response.json();
+            console.log('Resposta do servidor:', result);
+            return result;
+        } catch (error) {
             console.error('Erro ao enviar os dados:', error);
-            alert('Ocorreu um erro ao enviar os dados. Por favor, tente novamente.');
-        });
-    }
-
-    function renderSuccessPage() {
-        console.log('Renderizando página de sucesso');
-        const mainContent = document.getElementById('main-content');
-        mainContent.innerHTML = `
-            <div class="text-center">
-                <h2 class="text-3xl font-bold mb-4">Formulário enviado com sucesso!</h2>
-                <p class="text-lg text-green-600">Obrigado por preencher o formulário. Um e-mail de confirmação foi enviado para você.</p>
-            </div>
-        `;
-    }
-
-    function processFormSubmission(event) {
-        event.preventDefault();
-        console.log('Processando envio do formulário');
-        const formData = collectFormData();
-        saveToGoogleDrive(formData);
-    }
-
-    // Função para adicionar o evento de clique ao botão Finalizar
-    function addFinalizeButtonListener() {
-        const finalizeButton = document.getElementById('finalize');
-        if (finalizeButton) {
-            console.log('Botão Finalizar encontrado');
-            finalizeButton.addEventListener('click', processFormSubmission);
-        } else {
-            console.error('Botão Finalizar não encontrado');
+            throw error;
         }
     }
 
-    // Observador de mutação para detectar quando o botão Finalizar é adicionado ao DOM
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.type === 'childList') {
-                const finalizeButton = document.getElementById('finalize');
-                if (finalizeButton) {
-                    addFinalizeButtonListener();
-                    observer.disconnect(); // Para de observar após encontrar o botão
-                }
+    function gerarPDF(dados) {
+        console.log('Gerando PDF com os dados:', dados);
+        // A geração do PDF agora é feita no lado do servidor (Google Apps Script)
+        return Promise.resolve('PDF será gerado no servidor');
+    }
+
+    async function processFormSubmission(event) {
+        event.preventDefault();
+        console.log('Processando envio do formulário');
+
+        try {
+            const dados = coletarDadosFormulario();
+            const resultadoEnvio = await saveToGoogleDrive(dados);
+            console.log('Resultado do envio:', resultadoEnvio);
+
+            if (resultadoEnvio.status === 'success') {
+                alert('Formulário processado com sucesso! Um e-mail será enviado com o PDF.');
+            } else {
+                throw new Error('Falha no processamento do formulário');
             }
-        });
-    });
+        } catch (error) {
+            console.error('Erro no processamento:', error);
+            alert('Ocorreu um erro ao processar o formulário. Por favor, tente novamente.');
+        }
+    }
 
-    // Configuração do observador
-    const config = { childList: true, subtree: true };
-    observer.observe(document.body, config);
-
-    console.log('Script carregado completamente');
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', processFormSubmission);
+        console.log('Formulário configurado para envio');
+    } else {
+        console.error('Formulário não encontrado');
+    }
 });
+
+console.log('Script carregado completamente');
