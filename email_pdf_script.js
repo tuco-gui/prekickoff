@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Iniciando envio para Google Drive');
         const url = 'https://script.google.com/macros/s/AKfycbwlVzZ4-VHrmommOdzzYo4AOeN_M2LenrNTFfMX5WrMaWFpamApSJ2vkoiuZBpP3Pc/exec';
         
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 segundos de timeout
+
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -19,8 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(dados)
+                body: JSON.stringify(dados),
+                signal: controller.signal
             });
+
+            clearTimeout(timeoutId);
 
             if (!response.ok) {
                 console.error('Resposta não-OK do servidor:', response.status, response.statusText);
@@ -31,7 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Resposta do servidor:', result);
             return result;
         } catch (error) {
-            console.error('Erro detalhado ao enviar os dados:', error);
+            if (error.name === 'AbortError') {
+                console.error('A requisição excedeu o tempo limite');
+            } else {
+                console.error('Erro detalhado ao enviar os dados:', error);
+            }
             throw error;
         }
     }
