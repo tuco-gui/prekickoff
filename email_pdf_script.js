@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function saveToGoogleDrive(dados) {
         console.log('Iniciando envio para Google Drive');
-        const url = 'https://script.google.com/macros/s/AKfycbzC7CYn11HzeYHkUESTXTQAfXuk44uZuDGeBy_XMN8M-adwZZIpd6aa8x555HlXp50/exec';
+        const url = 'https://script.google.com/macros/s/AKfycbwlVzZ4-VHrmommOdzzYo4AOeN_M2LenrNTFfMX5WrMaWFpamApSJ2vkoiuZBpP3Pc/exec';
         
         try {
             const response = await fetch(url, {
@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             if (!response.ok) {
+                console.error('Resposta não-OK do servidor:', response.status, response.statusText);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Resposta do servidor:', result);
             return result;
         } catch (error) {
-            console.error('Erro ao enviar os dados:', error);
+            console.error('Erro detalhado ao enviar os dados:', error);
             throw error;
         }
     }
@@ -41,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const dados = coletarDadosFormulario();
-            if (!dados) {
+            if (!dados || Object.keys(dados).length === 0) {
                 throw new Error('Falha ao coletar dados do formulário');
             }
             const resultadoEnvio = await saveToGoogleDrive(dados);
