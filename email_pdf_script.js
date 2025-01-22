@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function saveToGoogleDrive(dados) {
         console.log('Iniciando envio para Google Drive');
-        const url = 'https://script.google.com/macros/s/AKfycbxLqlVWKh2QrvBm4unjboikQZl5WEEzQZ3gLLc44CqpZkBCa6_K4IucIrSBGHUKDAalwg/exec';
+        const url = 'https://script.google.com/macros/s/AKfycbzC7CYn11HzeYHkUESTXTQAfXuk44uZuDGeBy_XMN8M-adwZZIpd6aa8x555HlXp50/exec';
         
         try {
             const response = await fetch(url, {
