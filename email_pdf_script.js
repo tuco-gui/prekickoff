@@ -1,7 +1,7 @@
 console.log('Script iniciando...');
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM carregado');
+function initializeScript() {
+    console.log('Inicializando script');
 
     function coletarDadosFormulario() {
         console.log('Coletando dados do formulário');
@@ -61,14 +61,29 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Adicionar o listener ao botão de finalizar
-    const finalizarButton = document.getElementById('finalize');
-    if (finalizarButton) {
-        console.log('Botão de finalizar encontrado, adicionando listener');
-        finalizarButton.addEventListener('click', processFormSubmission);
-    } else {
-        console.error('Botão de finalizar não encontrado');
+    // Função para adicionar o listener ao botão
+    function addButtonListener() {
+        const finalizarButton = document.getElementById('finalize');
+        if (finalizarButton) {
+            console.log('Botão de finalizar encontrado, adicionando listener');
+            finalizarButton.addEventListener('click', processFormSubmission);
+        } else {
+            console.error('Botão de finalizar não encontrado');
+            // Tenta novamente após 1 segundo
+            setTimeout(addButtonListener, 1000);
+        }
     }
-});
+
+    // Inicia o processo de adicionar o listener
+    addButtonListener();
+}
+
+// Adiciona um listener para o evento DOMContentLoaded
+document.addEventListener('DOMContentLoaded', initializeScript);
+
+// Também tenta inicializar imediatamente, caso o DOM já esteja carregado
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initializeScript();
+}
 
 console.log('Script carregado completamente');
