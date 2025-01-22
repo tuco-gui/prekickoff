@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function coletarDadosFormulario() {
         console.log('Coletando dados do formulário');
         const form = document.querySelector('form');
+        if (!form) {
+            console.error('Formulário não encontrado');
+            return null;
+        }
         const formData = new FormData(form);
         const dadosObj = {};
         for (let [key, value] of formData.entries()) {
@@ -40,18 +44,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function gerarPDF(dados) {
-        console.log('Gerando PDF com os dados:', dados);
-        // A geração do PDF agora é feita no lado do servidor (Google Apps Script)
-        return Promise.resolve('PDF será gerado no servidor');
-    }
-
     async function processFormSubmission(event) {
         event.preventDefault();
         console.log('Processando envio do formulário');
 
         try {
             const dados = coletarDadosFormulario();
+            if (!dados) {
+                throw new Error('Falha ao coletar dados do formulário');
+            }
             const resultadoEnvio = await saveToGoogleDrive(dados);
             console.log('Resultado do envio:', resultadoEnvio);
 
@@ -66,12 +67,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    const form = document.querySelector('form');
+    // Tenta encontrar o formulário de várias maneiras
+    const form = document.querySelector('form') || 
+                 document.getElementById('preKickoffForm') || 
+                 document.forms[0];
+
     if (form) {
         form.addEventListener('submit', processFormSubmission);
         console.log('Formulário configurado para envio');
     } else {
-        console.error('Formulário não encontrado');
+        console.error('Formulário não encontrado. Verifique se o formulário existe na página.');
     }
 });
 
