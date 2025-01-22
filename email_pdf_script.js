@@ -1,3 +1,5 @@
+console.log('Script iniciando...');
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM carregado');
 
@@ -15,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await fetch(url, {
                 method: 'POST',
-                mode: 'no-cors', // Alterado para no-cors
+                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -23,9 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             console.log('Resposta recebida:', response);
-            
-            // Como estamos usando no-cors, não podemos ler a resposta
-            // Vamos assumir que foi bem-sucedido se chegou até aqui
             return { status: "success", message: "Formulário enviado com sucesso" };
         } catch (error) {
             console.error('Erro detalhado ao enviar os dados:', error);
@@ -34,14 +33,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function processFormSubmission(event) {
-        if (event) event.preventDefault();
-        console.log('Processando envio do formulário');
+        console.log('Função processFormSubmission chamada');
+        if (event) {
+            event.preventDefault();
+            console.log('Evento padrão prevenido');
+        }
 
         try {
             const dados = coletarDadosFormulario();
             if (!dados || Object.keys(dados).length === 0) {
                 throw new Error('Falha ao coletar dados do formulário');
             }
+            console.log('Dados coletados com sucesso:', dados);
+
+            console.log('Iniciando saveToGoogleDrive');
             const resultadoEnvio = await saveToGoogleDrive(dados);
             console.log('Resultado do envio:', resultadoEnvio);
 
@@ -59,10 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Adicionar o listener ao botão de finalizar
     const finalizarButton = document.getElementById('finalize');
     if (finalizarButton) {
+        console.log('Botão de finalizar encontrado, adicionando listener');
         finalizarButton.addEventListener('click', processFormSubmission);
-        console.log('Listener adicionado ao botão de finalizar');
     } else {
-        console.log('Botão de finalizar não encontrado');
+        console.error('Botão de finalizar não encontrado');
     }
 });
 
