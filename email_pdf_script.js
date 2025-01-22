@@ -61,28 +61,40 @@ function initializeScript() {
         }
     }
 
-    // Função para adicionar o listener ao botão
     function addButtonListener() {
         const finalizarButton = document.getElementById('finalize');
         if (finalizarButton) {
-            console.log('Botão de finalizar encontrado, adicionando listener');
-            finalizarButton.addEventListener('click', processFormSubmission);
+            console.log('Botão de finalizar encontrado');
+            if (finalizarButton.disabled) {
+                console.log('Botão está desabilitado, aguardando habilitação');
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.type === 'attributes' && mutation.attributeName === 'disabled') {
+                            if (!finalizarButton.disabled) {
+                                console.log('Botão habilitado, adicionando listener');
+                                finalizarButton.addEventListener('click', processFormSubmission);
+                                observer.disconnect();
+                            }
+                        }
+                    });
+                });
+                observer.observe(finalizarButton, { attributes: true });
+            } else {
+                console.log('Botão já está habilitado, adicionando listener');
+                finalizarButton.addEventListener('click', processFormSubmission);
+            }
         } else {
             console.error('Botão de finalizar não encontrado');
-            // Tenta novamente após 1 segundo
             setTimeout(addButtonListener, 1000);
         }
     }
 
-    // Inicia o processo de adicionar o listener
     addButtonListener();
 }
 
-// Adiciona um listener para o evento DOMContentLoaded
-document.addEventListener('DOMContentLoaded', initializeScript);
-
-// Também tenta inicializar imediatamente, caso o DOM já esteja carregado
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeScript);
+} else {
     initializeScript();
 }
 
