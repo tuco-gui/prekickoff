@@ -51,7 +51,9 @@ function initializeScript() {
             console.log('Resultado do envio:', resultadoEnvio);
 
             if (resultadoEnvio.status === 'success') {
-                alert('Formulário processado com sucesso! Um e-mail será enviado com o PDF.');
+                alert(`Formulário processado com sucesso! 
+                       Um e-mail foi enviado com os detalhes e o PDF foi salvo no Google Drive.
+                       Você receberá um e-mail com o link para acessar o PDF.`);
             } else {
                 throw new Error('Falha no processamento do formulário');
             }
@@ -61,35 +63,13 @@ function initializeScript() {
         }
     }
 
-    function addButtonListener() {
-        const finalizarButton = document.getElementById('finalize');
-        if (finalizarButton) {
-            console.log('Botão de finalizar encontrado');
-            if (finalizarButton.disabled) {
-                console.log('Botão está desabilitado, aguardando habilitação');
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.type === 'attributes' && mutation.attributeName === 'disabled') {
-                            if (!finalizarButton.disabled) {
-                                console.log('Botão habilitado, adicionando listener');
-                                finalizarButton.addEventListener('click', processFormSubmission);
-                                observer.disconnect();
-                            }
-                        }
-                    });
-                });
-                observer.observe(finalizarButton, { attributes: true });
-            } else {
-                console.log('Botão já está habilitado, adicionando listener');
-                finalizarButton.addEventListener('click', processFormSubmission);
-            }
-        } else {
-            console.error('Botão de finalizar não encontrado');
-            setTimeout(addButtonListener, 1000);
-        }
+    const finalizarButton = document.getElementById('finalize');
+    if (finalizarButton) {
+        console.log('Botão de finalizar encontrado, adicionando listener');
+        finalizarButton.addEventListener('click', processFormSubmission);
+    } else {
+        console.error('Botão de finalizar não encontrado');
     }
-
-    addButtonListener();
 }
 
 if (document.readyState === 'loading') {
